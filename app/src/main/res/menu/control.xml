@@ -9,4 +9,9 @@
     <item android:id="@+id/visible"
         android:orderInCategory="3"
         android:title="@string/visible"/>
+
+    <item android:id="@+id/config"
+        android:orderInCategory="2"
+        android:title="@string/configurar"
+        />
 </menu>

@@ -7,6 +7,8 @@
     <string name="visible">Hacer visible</string>
     <string name="cambiar">Encender Bluetooth</string>
     <string name="buscar">Conectar a dispositivo</string>
+    <string name="configurar">Configuración de frecuencias</string>
+
 
     <!--  texto de TextView -->
     <string name="mensaje_1">Bionstrumentación III\nInterfaz del litotriptor</string>
@@ -37,5 +39,9 @@
     <!-- textos DeviceList-->
     <string name="dialog_vinculados">Dispositivos Vinculados</string>
     <string name="dialog_encontados">Dispositivos Encontrados</string>
+    <string name="title_activity_frecuencias">Frecuencias</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

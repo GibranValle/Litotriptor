@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="bioinstrumentacion.upibi.gibran.litotriptor">
+    package="bioinstrumentacion.upibi.gibran.litotriptor" >
 
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -19,10 +20,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".DeviceList"
+            android:theme="@android:style/Theme.Holo.Dialog" />
 
-        <activity android:name=".DeviceList"
-            android:theme="@android:style/Theme.Holo.Dialog"/>
-
+        <activity
+            android:name=".Frecuencias"
+            android:theme="@android:style/Theme.Holo.Dialog" />
     </application>
 
 </manifest>
