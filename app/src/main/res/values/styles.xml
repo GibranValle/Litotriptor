@@ -33,7 +33,7 @@
 
     <style name="boton">
         <item name="android:textColor">@color/letra</item>
-        <item name="android:background">@color/azul</item>
+        <item name="android:background">@color/boton</item>
     </style>
 
 </resources>

@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:padding="3dp"
         android:id="@+id/bienvenida"
-        android:layout_weight="0.5">
+        android:layout_weight="1">
 
         <TextView
             android:layout_width="match_parent"
@@ -45,7 +45,7 @@
 
         <LinearLayout
             android:visibility="visible"
-            android:layout_weight="0.8"
+            android:layout_weight="0.5"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp">
@@ -72,7 +72,7 @@
         android:id="@+id/control"
         android:visibility="visible"
         android:layout_marginBottom="20dp"
-        android:layout_weight="0.8">
+        android:layout_weight="1.2">
         <LinearLayout
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -133,7 +133,7 @@
         android:id="@+id/control2"
         android:visibility="visible"
         android:layout_marginBottom="20dp"
-        android:layout_weight="0.8">
+        android:layout_weight="1.2">
         <LinearLayout
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"

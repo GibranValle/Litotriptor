@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -60,6 +61,8 @@ public class Frecuencias extends Activity {
         {
             public void onClick(View v)
             {
+                Vibrator vibrador = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);        // Vibrate for 500 milliseconds
+                vibrador.vibrate(50);
                 pm = Integer.parseInt(fp1);
                 pM = Integer.parseInt(fp2);
                 mm = Integer.parseInt(fm1);
@@ -99,6 +102,8 @@ public class Frecuencias extends Activity {
         {
             public void onClick(View v)
             {
+                Vibrator vibrador = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);        // Vibrate for 500 milliseconds
+                vibrador.vibrate(50);
                 finish();
             }
         }

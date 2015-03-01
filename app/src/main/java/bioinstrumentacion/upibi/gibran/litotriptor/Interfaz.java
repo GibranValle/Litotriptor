@@ -1,5 +1,7 @@
 package bioinstrumentacion.upibi.gibran.litotriptor;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -45,7 +47,6 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
     // Member object for the chat services
     private BluetoothManager BTservice = null;
 
-    String fp1, fp2, fm1, fm2;
     int pm, pM, mm, mM;
 
     // Debuggin
@@ -59,24 +60,13 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
     SeekBar barrita, barrita2;
     Intent i;
     int valorBarra1, valorBarra2;
+    ObjectAnimator animador;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, " onCreate ");
         setContentView(R.layout.activity_interfaz);
-
-        //cargar la clave en cada push, abrir el archivo en modo privado
-        final SharedPreferences respaldo = getSharedPreferences("MisDatos", Context.MODE_PRIVATE);
-        // cargar la clave en la variable clave, o 0000 por default (no encontrada, etc);
-        fp1 = respaldo.getString("fp1","10000");
-        fp2 = respaldo.getString("fp2","20000");
-        fm1 = respaldo.getString("fm1","0");
-        fm2 = respaldo.getString("fm2","1000");
-
-        pm = Integer.parseInt(fp1);
-        pM = Integer.parseInt(fp2);
-        mm = Integer.parseInt(fm1);
-        mM = Integer.parseInt(fm2);
 
         //cargar recurso xml
         consola = (TextView) findViewById(R.id.consola);
@@ -100,6 +90,14 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
 
         barrita.setOnSeekBarChangeListener(this);
         barrita2.setOnSeekBarChangeListener(this);
+
+        //cargar la clave en cada push, abrir el archivo en modo privado
+        final SharedPreferences respaldo = getSharedPreferences("MisDatos", Context.MODE_PRIVATE);
+        // cargar la clave en la variable clave, o 0000 por default (no encontrada, etc);
+        pm = Integer.parseInt(respaldo.getString("fp1","10000"));
+        pM = Integer.parseInt(respaldo.getString("fp2","20000"));
+        mm = Integer.parseInt(respaldo.getString("fm1","0"));
+        mM = Integer.parseInt(respaldo.getString("fm2","1000"));
 
         // asignar valor inicial
         barrita.setProgress(50);
@@ -134,6 +132,15 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
 
         // configurar el servicio de BT
         if (BTservice == null) configurar();
+
+
+        //cargar la clave en cada push, abrir el archivo en modo privado
+        final SharedPreferences respaldo = getSharedPreferences("MisDatos", Context.MODE_PRIVATE);
+        // cargar la clave en la variable clave, o 0000 por default (no encontrada, etc);
+        pm = Integer.parseInt(respaldo.getString("fp1","10000"));
+        pM = Integer.parseInt(respaldo.getString("fp2","20000"));
+        mm = Integer.parseInt(respaldo.getString("fm1","0"));
+        mM = Integer.parseInt(respaldo.getString("fm2","1000"));
         //////////////////*BLUETOOH ////////////////*/////////////////*/////////////////*/////////////////*/
     }
 
@@ -162,6 +169,19 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         }
     }
 
+    public void animar(Button boton)
+    {
+        //animacion
+        if (animador != null)
+        {
+            animador.cancel();
+        }
+        animador = ObjectAnimator.ofInt(boton, "backgroundColor", 0xe62b2a71, 0xe6000394, 0xe62b2a71);
+        animador.setDuration(300);
+        animador.setEvaluator(new ArgbEvaluator());
+        animador.start();
+    }
+
     @Override
     public void onClick(View v) {
         Vibrator vibrador = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);        // Vibrate for 500 milliseconds
@@ -169,36 +189,34 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         int conteo = 0;
         if(v.getId() == R.id.b_enviar1) // rotar hombro
         {
+            animar(botonEnviar1);
             // Rellenar con 0's
             String datos = String.valueOf(valorBarra1);
-            if (datos.length()<5)
+            for(conteo=0;conteo < 6; conteo++)
             {
-                datos = "0"+datos;
+                if (datos.length()<5)
+                {
+                    datos = "0"+datos;
+                }
             }
-
-            if (datos.length()<3)
-            {
-                datos = "0"+datos;
-            }
-            Log.d(TAG, datos);
-            enviarMensaje("A"+datos); // CONTROL DE VELOCIDAD
+            Log.d(TAG, "P"+datos);
+            enviarMensaje("P" + datos); // CONTROL DE VELOCIDAD
         }
 
         if(v.getId() == R.id.b_enviar2) // abducir hombro
         {
+            animar(botonEnviar2);
             // Rellenar con 0's
             String datos = String.valueOf(valorBarra2);
-            if (datos.length()<5)
+            for(conteo=0;conteo < 6; conteo++)
             {
-                datos = "0"+datos;
+                if (datos.length()<5)
+                {
+                    datos = "0"+datos;
+                }
             }
-
-            if (datos.length()<3)
-            {
-                datos = "0"+datos;
-            }
-            Log.d(TAG, datos);
-            enviarMensaje("B"+datos); // CONTROL DE VELOCIDAD
+            Log.d(TAG,"M" + datos);
+            enviarMensaje("M"+datos); // CONTROL DE VELOCIDAD
         }
     }
     //************************************** SWITCH *********************************************//
@@ -210,15 +228,17 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
 
     //************************************** Seekbar *********************************************//
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
         if(seekBar.getId()==R.id.velocidad) // primer seekbar
         {
-            frecuenciaPortadora.setText("Frecuencia portadora: " + progress / 100 * 20000 + "Hz");
-            valorBarra1 = progress;
+            valorBarra1 = (pM - pm)*progress/100 + pm ;
+            frecuenciaPortadora.setText(valorBarra1+ "Hz");
+
         }
         if(seekBar.getId()==R.id.velocidad2) // primer seekbar
         {
-            frecuenciaModuladora.setText("Frecuencia moduladora: " + progress / 100 * 20000 + "Hz");
-            valorBarra2 = progress;
+            valorBarra2 = (mM - mm)*progress/100 + mm ;
+            frecuenciaModuladora.setText(valorBarra2 + "Hz");
         }
     }
 
@@ -250,6 +270,10 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
                 hacerVisible();
                 break;
 
+            case R.id.config:
+                Log.d(TAG, "CONFIGURAR FRECUENCIAS");
+                startActivity(new Intent(this,Frecuencias.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -377,6 +401,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
                 case MESSAGE_READ:
                     final String readMessage = (String) msg.obj;
                     Log.e(TAG, "armado2: " + readMessage);
+                    consola.setText(readMessage);
                     break;
                 case MESSAGE_DEVICE_NAME:
                     // save the connected device's name

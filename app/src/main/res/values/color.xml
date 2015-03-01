@@ -7,6 +7,8 @@
     <color name="BLUE">#8c0000ff</color>
     <color name="azul">#ff497ec0</color>
     <color name="azul2">#8accf7f2</color>
+    <color name="boton">#e62b2a71</color>
+    <color name="botonApretado">#e6000394</color>
     <!-- RGB -->
     <color name="azul3">#0F0</color>
 </resources>
