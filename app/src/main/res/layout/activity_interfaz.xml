@@ -21,7 +21,7 @@
             android:layout_gravity="center"
             android:text="@string/mensaje_1"
             android:id="@+id/mensaje_bienvenida"
-            style="@style/titulo_1"/>
+            style="@style/titulo"/>
 
     </LinearLayout>
 
@@ -41,9 +41,10 @@
             android:layout_gravity="center"
             android:text="@string/bt_DC"
             android:id="@+id/mensaje_estado"
-            style="@style/mtexto"/>
+            style="@style/btexto"/>
 
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:visibility="visible"
             android:layout_weight="0.5"
             android:orientation="horizontal"
