@@ -44,18 +44,16 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
     // Member object for the chat services
     private BluetoothManager BTservice = null;
     // Debuggin
-    StringBuilder read = new StringBuilder();
-
     String TAG = "Interfaz";
     private static final boolean D = true;
     /*//////////////////////// CONSTANTES PARA BLUETOOTH//////////////////////////////////////////*/
 
     TextView estado, consola;
-    TextView speed, speed2, speed3, texto1, texto2, texto3;
-    Button botonRotar, botonAbducir, botonCodo;
-    SeekBar barrita, barrita2, barrita3;
+    TextView speed, speed2, texto1, texto2;
+    Button botonEnviar1, botonEnviar2;
+    SeekBar barrita, barrita2;
     Intent i;
-    int valorBarra1, valorBarra2, valorBarra3;
+    int valorBarra1, valorBarra2;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,25 +70,22 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         texto1 = (TextView) findViewById(R.id.textoProgreso);
         texto2 = (TextView) findViewById(R.id.textoProgreso2);
 
-        botonRotar = (Button) findViewById(R.id.b_accion);
-        botonAbducir = (Button) findViewById(R.id.b_accion2);
+        botonEnviar1 = (Button) findViewById(R.id.b_enviar1);
+        botonEnviar2 = (Button) findViewById(R.id.b_enviar2);
 
         barrita = (SeekBar) findViewById(R.id.velocidad);
         barrita2 = (SeekBar) findViewById(R.id.velocidad2);
 
         // asignar event listener
-        botonRotar.setOnClickListener(this);
-        botonAbducir.setOnClickListener(this);
-        botonCodo.setOnClickListener(this);
+        botonEnviar1.setOnClickListener(this);
+        botonEnviar2.setOnClickListener(this);
 
         barrita.setOnSeekBarChangeListener(this);
         barrita2.setOnSeekBarChangeListener(this);
-        barrita3.setOnSeekBarChangeListener(this);
 
         // asignar valor inicial
         barrita.setProgress(50);
         barrita2.setProgress(50);
-        barrita3.setProgress(50);
 
         //////////////////*BLUETOOH ////////////////*/////////////////*/////////////////*/////////////////*/
         // Obtener el adaptador y comprobar soporte de BT
@@ -154,7 +149,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         Vibrator vibrador = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);        // Vibrate for 500 milliseconds
         vibrador.vibrate(50);
         int conteo = 0;
-        if(v.getId() == R.id.b_accion ) // rotar hombro
+        if(v.getId() == R.id.b_enviar1) // rotar hombro
         {
             // Rellenar con 0's
             String datos = String.valueOf(valorBarra1);
@@ -171,7 +166,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
             enviarMensaje("A"+datos); // CONTROL DE VELOCIDAD
         }
 
-        if(v.getId() == R.id.b_accion2 ) // abducir hombro
+        if(v.getId() == R.id.b_enviar2) // abducir hombro
         {
             // Rellenar con 0's
             String datos = String.valueOf(valorBarra2);

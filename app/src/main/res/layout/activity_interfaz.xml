@@ -113,7 +113,7 @@
             <Button
                 android:layout_margin="5dp"
                 android:layout_width="199dp"
-                android:id="@+id/b_accion"
+                android:id="@+id/b_enviar1"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 style="@style/boton"
@@ -174,7 +174,7 @@
             <Button
                 android:layout_margin="5dp"
                 android:layout_width="199dp"
-                android:id="@+id/b_accion2"
+                android:id="@+id/b_enviar2"
                 android:layout_height="0dp"
                 android:layout_weight="0.2"
                 style="@style/boton"

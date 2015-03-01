@@ -56,8 +56,8 @@ public class DeviceList extends Activity {
         // Set result CANCELED in case the user backs out
         setResult(Activity.RESULT_CANCELED);
 
-        // Inicializa el botonRotar, para realizar el discovery, lanza el metodo
-        // doDiscovery y elimina el botonRotar.
+        // Inicializa el botonEnviar1, para realizar el discovery, lanza el metodo
+        // doDiscovery y elimina el botonEnviar1.
         Button scanButton = (Button) findViewById(R.id.b_buscar);
         scanButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -67,8 +67,8 @@ public class DeviceList extends Activity {
         });
 
         // inicializa los arreglos para devices vinculados y encontrados
-        arrayDevicesVinculados = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-        arrayDevicesEncontrados = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        arrayDevicesVinculados = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        arrayDevicesEncontrados = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 
         // agrega los resources desde xml
         ListView pairedListView = (ListView) findViewById(R.id.lista_encontrados);
