@@ -49,7 +49,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
     /*//////////////////////// CONSTANTES PARA BLUETOOTH//////////////////////////////////////////*/
 
     TextView estado, consola;
-    TextView speed, speed2, texto1, texto2;
+    TextView frecuenciaPortadora, frecuenciaModuladora, texto1, texto2;
     Button botonEnviar1, botonEnviar2;
     SeekBar barrita, barrita2;
     Intent i;
@@ -64,8 +64,8 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         consola = (TextView) findViewById(R.id.consola);
         estado = (TextView) findViewById(R.id.mensaje_estado);
 
-        speed = (TextView) findViewById(R.id.progreso);
-        speed2 = (TextView) findViewById(R.id.progreso2);
+        frecuenciaPortadora = (TextView) findViewById(R.id.progreso);
+        frecuenciaModuladora = (TextView) findViewById(R.id.progreso2);
 
         texto1 = (TextView) findViewById(R.id.textoProgreso);
         texto2 = (TextView) findViewById(R.id.textoProgreso2);
@@ -148,39 +148,35 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
     public void onClick(View v) {
         Vibrator vibrador = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);        // Vibrate for 500 milliseconds
         vibrador.vibrate(50);
-        int conteo = 0;
+        int j;
         if(v.getId() == R.id.b_enviar1) // rotar hombro
         {
             // Rellenar con 0's
-            String datos = String.valueOf(valorBarra1);
-            if (datos.length()<3)
+            String datos = String.valueOf(valorBarra1*20000/100);
+            for(j=0;j<6;j++)
             {
-                datos = "0"+datos;
+                if (datos.length()<5)
+                {
+                    datos = "0"+datos;
+                }
             }
-
-            if (datos.length()<3)
-            {
-                datos = "0"+datos;
-            }
-            Log.d(TAG, datos);
-            enviarMensaje("A"+datos); // CONTROL DE VELOCIDAD
+            Log.d(TAG, "P"+datos);
+            enviarMensaje("P"+datos); // ASCII DE LA FRECUENCIA DE PORTADORA
         }
 
         if(v.getId() == R.id.b_enviar2) // abducir hombro
         {
             // Rellenar con 0's
-            String datos = String.valueOf(valorBarra2);
-            if (datos.length()<3)
+            String datos = String.valueOf(valorBarra2*1000/100);
+            for(j=0;j<6;j++)
             {
-                datos = "0"+datos;
+                if (datos.length()<5)
+                {
+                    datos = "0"+datos;
+                }
             }
-
-            if (datos.length()<3)
-            {
-                datos = "0"+datos;
-            }
-            Log.d(TAG, datos);
-            enviarMensaje("B"+datos); // CONTROL DE VELOCIDAD
+            Log.d(TAG, "M"+datos);
+            enviarMensaje("M"+datos);// ASCII DE LA FRECUENCIA MODULADORA
         }
     }
     //************************************** SWITCH *********************************************//
@@ -194,12 +190,12 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if(seekBar.getId()==R.id.velocidad) // primer seekbar
         {
-            texto1.setText("Frecuencia portadora: " + progress/100*20000 + "Hz");
+            frecuenciaPortadora.setText(progress*20000/100 + "Hz");
             valorBarra1 = progress;
         }
         if(seekBar.getId()==R.id.velocidad2) // primer seekbar
         {
-            texto2.setText("Frecuencia moduladora: " + progress/100*20000 + "Hz");
+            frecuenciaModuladora.setText(progress*1000/100 + "Hz");
             valorBarra2 = progress;
         }
     }
@@ -328,7 +324,8 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
             switch (msg.what) {
                 case MESSAGE_STATE_CHANGE:
                     if(D) Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
-                    switch (msg.arg1) {
+                    switch (msg.arg1)
+                    {
                         case BluetoothManager.STATE_CONNECTED:
                             estado.setText(R.string.bt_CT);
                             estado.setBackgroundColor(0x4300ff00);
@@ -359,6 +356,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
                 case MESSAGE_READ:
                     final String readMessage = (String) msg.obj;
                     Log.e(TAG, "armado2: " + readMessage);
+                    consola.setText(readMessage);
                     break;
                 case MESSAGE_DEVICE_NAME:
                     // save the connected device's name
