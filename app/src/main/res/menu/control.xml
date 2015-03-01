@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="app.upibi.gibran.dimmex.Admin" >
+
+    <item android:id="@+id/buscar"
+    android:orderInCategory="1"
+    android:title="@string/buscar"/>
+
+    <item android:id="@+id/visible"
+        android:orderInCategory="3"
+        android:title="@string/visible"/>
+</menu>

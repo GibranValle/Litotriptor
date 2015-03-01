@@ -1,0 +1,237 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/fondo"
+    android:id="@+id/layout"
+    tools:context="app.upibi.gibran.dimmex.Control">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:padding="3dp"
+        android:id="@+id/bienvenida"
+        android:layout_weight="1.2">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:text="@string/mensaje_1"
+            android:id="@+id/mensaje_bienvenida"
+            style="@style/titulo_1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:id="@+id/conexion"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/RED"
+            android:layout_weight="0.8"
+            android:layout_gravity="center"
+            android:text="@string/bt_DC"
+            android:id="@+id/mensaje_estado"
+            style="@style/mtexto"/>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_weight="0.8"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <TextView
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="@string/bt_consola"
+                android:id="@+id/consola"
+                style="@style/btexto"/>
+
+        </LinearLayout>
+            </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:id="@+id/control"
+        android:visibility="visible"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"                      >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:id="@+id/potencia">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/velocidad"
+                    android:id="@+id/textoProgreso"
+                    android:layout_gravity="center"
+                    android:layout_weight="2.5"
+                    style="@style/mtexto"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/progreso"
+                    android:layout_weight="1.5"
+                    android:id="@+id/progreso"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    style="@style/mtexto"/>
+            </LinearLayout>
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/velocidad"
+                android:indeterminate="false" />
+        </LinearLayout>
+        <Button
+            android:layout_margin="5dp"
+            android:layout_width="100dp"
+            android:id="@+id/b_accion"
+            android:layout_height="wrap_content"
+            style="@style/boton"
+            android:text="@string/b_accionar"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:id="@+id/control2"
+        android:visibility="visible"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:id="@+id/potencia2">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/velocidad"
+                    android:id="@+id/textoProgreso2"
+                    android:layout_gravity="center"
+                    android:layout_weight="2.5"
+                    style="@style/mtexto"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/progreso"
+                    android:layout_weight="1.5"
+                    android:id="@+id/progreso2"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    style="@style/mtexto"/>
+            </LinearLayout>
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/velocidad2" />
+        </LinearLayout>
+        <Button
+            android:layout_margin="5dp"
+            android:layout_width="100dp"
+            android:id="@+id/b_accion2"
+            android:layout_height="wrap_content"
+            style="@style/boton"
+            android:text="@string/b_accionar2"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:id="@+id/control3"
+        android:visibility="visible"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:id="@+id/potencia3">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/velocidad"
+                    android:id="@+id/textoProgreso3"
+                    android:layout_gravity="center"
+                    android:layout_weight="2.5"
+                    style="@style/mtexto"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/progreso"
+                    android:layout_weight="1.5"
+                    android:id="@+id/progreso3"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    style="@style/mtexto"/>
+            </LinearLayout>
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/velocidad3" />
+        </LinearLayout>
+        <Button
+            android:layout_margin="5dp"
+            android:layout_width="100dp"
+            android:id="@+id/b_accion3"
+            android:layout_height="wrap_content"
+            style="@style/boton"
+            android:text="@string/b_accionar3"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+</LinearLayout>

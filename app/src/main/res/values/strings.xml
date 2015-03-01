@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  titulo de activities de menu -->
+    <string name="app_name">brazo Robot</string>
+
+    <!--  texto de menu -->
+    <string name="visible">Hacer visible</string>
+    <string name="cambiar">Encender Bluetooth</string>
+    <string name="buscar">Conectar a dispositivo</string>
+
+    <!--  texto de TextView -->
+    <string name="mensaje_1">Electronica III \n Proyecto 3er Parcial: \n Brazo robot, control en lazo abierto con triacs </string>
+    <string name="spinner">Estado del elemento: </string>
+    <string name="novinculados">No se encontraron dispositivos vinculados</string>
+    <string name="noencontrados">No se encontraron dispositivos</string>
+    <string name="velocidad">Potencia de impulso:  </string>
+    <string name="progreso">0%</string>
+
+    <!-- textos BT -->
+    <string name="bt_DC">Estado de Conexión: \n Desconectado</string>
+    <string name="bt_CT">Estado de Conexión: \n Conectado</string>
+    <string name="bt_CTING">Estado de Conexión: \n Conectando</string>
+    <string name="bt_read">Estado del elemento: \n Desconocida</string>
+    <string name="bt_consola">Sin conexión</string>
+    <string name="bt_elemento_on">Estado del elemento: \n Encendido</string>
+    <string name="bt_elemento_off">Estado del elemento: \n Apagado</string>
+    <string name="bt_sin_elemento">Estado del elemento: \n Seleccione elemento</string>
+
+    <!-- texto de botones -->
+    <string name="switch_on">On</string>
+    <string name="switch_off">Off</string>
+    <string name="buscar2">Buscar nuevos dispositivos</string>
+    <string name="b_scanning">  Cancelar busqueda  </string>
+    <string name="b_accionar">  Rotar Hombro  </string>
+    <string name="b_accionar2">  Abducir Hombro </string>
+    <string name="b_accionar3">  Flexionar Codo  </string>
+
+    <!-- textos DeviceList-->
+    <string name="dialog_vinculados">Dispositivos Vinculados</string>
+    <string name="dialog_encontados">Dispositivos Encontrados</string>
+
+</resources>

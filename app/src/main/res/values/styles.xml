@@ -1,0 +1,39 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="titulo_1">
+        <item name="android:textColor">@color/letra</item>
+        <item name="android:textSize">8pt</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="titulo">
+        <item name="android:textColor">@color/letra</item>
+        <item name="android:textSize">12pt</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="btexto">
+        <item name="android:textColor">@color/letra</item>
+        <item name="android:textSize">10pt</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="mtexto">
+        <item name="android:textColor">@color/letra</item>
+        <item name="android:textSize">8pt</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="boton">
+        <item name="android:textColor">@color/letra</item>
+        <item name="android:background">@color/azul</item>
+    </style>
+
+</resources>
