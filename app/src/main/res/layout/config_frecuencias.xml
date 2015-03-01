@@ -108,7 +108,6 @@
             android:id="@+id/fm_out2"
             />
         <EditText
-            android:maxLength="5"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

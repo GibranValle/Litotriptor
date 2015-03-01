@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,13 +44,17 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
     private BluetoothAdapter BTadaptador = null;
     // Member object for the chat services
     private BluetoothManager BTservice = null;
+
+    String fp1, fp2, fm1, fm2;
+    int pm, pM, mm, mM;
+
     // Debuggin
     String TAG = "Interfaz";
     private static final boolean D = true;
     /*//////////////////////// CONSTANTES PARA BLUETOOTH//////////////////////////////////////////*/
 
     TextView estado, consola;
-    TextView speed, speed2, texto1, texto2;
+    TextView frecuenciaPortadora, frecuenciaModuladora, texto1, texto2;
     Button botonEnviar1, botonEnviar2;
     SeekBar barrita, barrita2;
     Intent i;
@@ -60,12 +65,25 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         Log.d(TAG, " onCreate ");
         setContentView(R.layout.activity_interfaz);
 
+        //cargar la clave en cada push, abrir el archivo en modo privado
+        final SharedPreferences respaldo = getSharedPreferences("MisDatos", Context.MODE_PRIVATE);
+        // cargar la clave en la variable clave, o 0000 por default (no encontrada, etc);
+        fp1 = respaldo.getString("fp1","10000");
+        fp2 = respaldo.getString("fp2","20000");
+        fm1 = respaldo.getString("fm1","0");
+        fm2 = respaldo.getString("fm2","1000");
+
+        pm = Integer.parseInt(fp1);
+        pM = Integer.parseInt(fp2);
+        mm = Integer.parseInt(fm1);
+        mM = Integer.parseInt(fm2);
+
         //cargar recurso xml
         consola = (TextView) findViewById(R.id.consola);
         estado = (TextView) findViewById(R.id.mensaje_estado);
 
-        speed = (TextView) findViewById(R.id.progreso);
-        speed2 = (TextView) findViewById(R.id.progreso2);
+        frecuenciaPortadora = (TextView) findViewById(R.id.progreso);
+        frecuenciaModuladora = (TextView) findViewById(R.id.progreso2);
 
         texto1 = (TextView) findViewById(R.id.textoProgreso);
         texto2 = (TextView) findViewById(R.id.textoProgreso2);
@@ -153,7 +171,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         {
             // Rellenar con 0's
             String datos = String.valueOf(valorBarra1);
-            if (datos.length()<3)
+            if (datos.length()<5)
             {
                 datos = "0"+datos;
             }
@@ -170,7 +188,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         {
             // Rellenar con 0's
             String datos = String.valueOf(valorBarra2);
-            if (datos.length()<3)
+            if (datos.length()<5)
             {
                 datos = "0"+datos;
             }
@@ -194,12 +212,12 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if(seekBar.getId()==R.id.velocidad) // primer seekbar
         {
-            texto1.setText("Frecuencia portadora: " + progress/100*20000 + "Hz");
+            frecuenciaPortadora.setText("Frecuencia portadora: " + progress / 100 * 20000 + "Hz");
             valorBarra1 = progress;
         }
         if(seekBar.getId()==R.id.velocidad2) // primer seekbar
         {
-            texto2.setText("Frecuencia moduladora: " + progress/100*20000 + "Hz");
+            frecuenciaModuladora.setText("Frecuencia moduladora: " + progress / 100 * 20000 + "Hz");
             valorBarra2 = progress;
         }
     }
