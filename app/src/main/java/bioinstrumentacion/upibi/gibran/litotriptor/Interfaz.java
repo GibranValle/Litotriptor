@@ -19,8 +19,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static java.lang.Math.abs;
-
 
 public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListener,View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     /*//////////////////////// CONSTANTES PARA BLUETOOTH//////////////////////////////////////////*/
@@ -70,19 +68,15 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
 
         speed = (TextView) findViewById(R.id.progreso);
         speed2 = (TextView) findViewById(R.id.progreso2);
-        speed3 = (TextView) findViewById(R.id.progreso3);
 
         texto1 = (TextView) findViewById(R.id.textoProgreso);
         texto2 = (TextView) findViewById(R.id.textoProgreso2);
-        texto3 = (TextView) findViewById(R.id.textoProgreso3);
 
         botonRotar = (Button) findViewById(R.id.b_accion);
         botonAbducir = (Button) findViewById(R.id.b_accion2);
-        botonCodo = (Button) findViewById(R.id.b_accion3);
 
         barrita = (SeekBar) findViewById(R.id.velocidad);
         barrita2 = (SeekBar) findViewById(R.id.velocidad2);
-        barrita3 = (SeekBar) findViewById(R.id.velocidad3);
 
         // asignar event listener
         botonRotar.setOnClickListener(this);
@@ -193,24 +187,6 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
             Log.d(TAG, datos);
             enviarMensaje("B"+datos); // CONTROL DE VELOCIDAD
         }
-
-        if(v.getId() == R.id.b_accion3 ) // flexionar codo
-        {
-            // Rellenar con 0's
-            String datos = String.valueOf(valorBarra3);
-            if (datos.length()<3)
-            {
-                datos = "0"+datos;
-            }
-
-            if (datos.length()<3)
-            {
-                datos = "0"+datos;
-            }
-            Log.d(TAG, datos);
-            enviarMensaje("C"+datos); // CONTROL DE VELOCIDAD
-        }
-
     }
     //************************************** SWITCH *********************************************//
     @Override
@@ -223,57 +199,13 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if(seekBar.getId()==R.id.velocidad) // primer seekbar
         {
-            texto1.setText("Potencia de impulso: " + abs(2 * progress - 100) + "%");
+            texto1.setText("Frecuencia portadora: " + progress/100*20000 + "Hz");
             valorBarra1 = progress;
-            if(progress < 50 )
-            {
-                speed.setText("Izquierda");
-            }
-            else if (progress > 50 )
-            {
-                speed.setText("Derecha");
-            }
-
-            else
-            {
-                speed.setText("Reposo");
-            }
         }
         if(seekBar.getId()==R.id.velocidad2) // primer seekbar
         {
-            texto2.setText("Potencia de impulso: " + abs(2*progress-100) + "%");
+            texto2.setText("Frecuencia moduladora: " + progress/100*20000 + "Hz");
             valorBarra2 = progress;
-            if(progress < 50 )
-            {
-                speed2.setText("Izquierda");
-            }
-            else if (progress > 50 )
-            {
-                speed2.setText("Derecha");
-            }
-
-            else
-            {
-                speed2.setText("Reposo");
-            }
-        }
-        if(seekBar.getId()==R.id.velocidad3) // primer seekbar
-        {
-            texto3.setText("Potencia de impulso: " + abs(2*progress-100) + "%");
-            valorBarra3 = progress;
-            if(progress < 50 )
-            {
-                speed3.setText("Izquierda");
-            }
-            else if (progress > 50 )
-            {
-                speed3.setText("Derecha");
-            }
-
-            else
-            {
-                speed3.setText("Reposo");
-            }
         }
     }
 
