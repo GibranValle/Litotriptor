@@ -27,10 +27,8 @@ public class BluetoothManager {
     // Debugging
     //private static final String TAG = "BluetoothChatService";
     private static final String TAG = "Interfaz";
+    String dispositivo;
     private boolean D = true;
-
-    byte[] buffer = new byte[512];
-    int bytes;
 
     // Name for the SDP record when creating server socket
     private static final String NAME_SECURE = "BluetoothChatSecure";
@@ -126,6 +124,7 @@ public class BluetoothManager {
 
     public synchronized void connect(BluetoothDevice device, boolean secure) {
         if (D) Log.d(TAG, "connect to: " + device);
+        dispositivo = String.valueOf(device.getName());
 
         // Cancel any thread attempting to make a connection
         if (mState == STATE_CONNECTING) {
@@ -239,7 +238,7 @@ public class BluetoothManager {
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(Interfaz.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(Interfaz.TOAST, "Unable to connect device");
+        bundle.putString(Interfaz.TOAST, "No se pudo establecer la conexión con: "+dispositivo);
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 
@@ -254,7 +253,7 @@ public class BluetoothManager {
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(Interfaz.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(Interfaz.TOAST, "Device connection was lost");
+        bundle.putString(Interfaz.TOAST, "Se perdió la conexión con: "+dispositivo);
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 

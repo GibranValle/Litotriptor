@@ -358,7 +358,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         BTservice.connect(device, secure);
         Log.d(TAG, "CONECTANDO A DEVICE.... " + device);
         Log.d(TAG, "CONECTANDO A DEVICE.... " + nombre);
-        Toast.makeText(this, "Conectado a " + nombre, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Conectando a " + nombre, Toast.LENGTH_LONG).show();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
