@@ -47,7 +47,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
     // Member object for the chat services
     private BluetoothManager BTservice = null;
 
-    int pm, pM, mm, mM;
+    int pm, pM, mm, mM, fss;
 
     // Debuggin
     String TAG = "Interfaz";
@@ -56,11 +56,12 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
 
     TextView estado, consola;
     TextView frecuenciaPortadora, frecuenciaModuladora, texto1, texto2;
-    Button botonEnviar1, botonEnviar2;
+    Button botonEnviar1, botonEnviar2, botonParo;
     SeekBar barrita, barrita2;
     Intent i;
     int valorBarra1, valorBarra2;
     ObjectAnimator animador;
+    String datos, incremento;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
 
         botonEnviar1 = (Button) findViewById(R.id.b_enviar1);
         botonEnviar2 = (Button) findViewById(R.id.b_enviar2);
+        botonParo = (Button) findViewById(R.id.b_paro);
 
         barrita = (SeekBar) findViewById(R.id.velocidad);
         barrita2 = (SeekBar) findViewById(R.id.velocidad2);
@@ -87,6 +89,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         // asignar event listener
         botonEnviar1.setOnClickListener(this);
         botonEnviar2.setOnClickListener(this);
+        botonParo.setOnClickListener(this);
 
         barrita.setOnSeekBarChangeListener(this);
         barrita2.setOnSeekBarChangeListener(this);
@@ -98,6 +101,8 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         pM = Integer.parseInt(respaldo.getString("fp2","20000"));
         mm = Integer.parseInt(respaldo.getString("fm1","0"));
         mM = Integer.parseInt(respaldo.getString("fm2","1000"));
+        fss = Integer.parseInt(respaldo.getString("fss","1"));
+        incremento = respaldo.getString("incremento","0");
 
         // asignar valor inicial
         barrita.setProgress(50);
@@ -141,6 +146,8 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         pM = Integer.parseInt(respaldo.getString("fp2","20000"));
         mm = Integer.parseInt(respaldo.getString("fm1","0"));
         mM = Integer.parseInt(respaldo.getString("fm2","1000"));
+        fss = Integer.parseInt(respaldo.getString("fss","1"));
+        incremento = respaldo.getString("incremento","0");
         //////////////////*BLUETOOH ////////////////*/////////////////*/////////////////*/////////////////*/
     }
 
@@ -169,54 +176,77 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         }
     }
 
-    public void animar(Button boton)
+    public void animar(Button boton, int ColorBase, int ColorPush)
     {
         //animacion
         if (animador != null)
         {
             animador.cancel();
         }
-        animador = ObjectAnimator.ofInt(boton, "backgroundColor", 0xe62b2a71, 0xe6000394, 0xe62b2a71);
-        animador.setDuration(300);
+        // colores default previos 0xe62b2a71, 0xe6000394, 0xe62b2a71
+        animador = ObjectAnimator.ofInt(boton, "backgroundColor", ColorBase, ColorPush, ColorBase);
+        animador.setDuration(100);
         animador.setEvaluator(new ArgbEvaluator());
         animador.start();
+    }
+
+    public String rellenar(int ENTERO)
+    {
+        int conteo;
+        String string = String.valueOf(ENTERO);
+        for(conteo=0;conteo < 6; conteo++)
+        {
+            if (string.length()<5)
+            {
+                string = "0"+string;
+            }
+        }
+        return  string;
     }
 
     @Override
     public void onClick(View v) {
         Vibrator vibrador = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);        // Vibrate for 500 milliseconds
-        vibrador.vibrate(50);
+        vibrador.vibrate(100);
         int conteo = 0;
         if(v.getId() == R.id.b_enviar1) // rotar hombro
         {
-            animar(botonEnviar1);
-            // Rellenar con 0's
-            String datos = String.valueOf(valorBarra1);
-            for(conteo=0;conteo < 6; conteo++)
+            animar(botonEnviar1, 0xe62b2a71, 0xe6000394);
+            datos = rellenar(valorBarra1);
+            if(incremento.equals("1"))  // incrementar frecuencia
             {
-                if (datos.length()<5)
-                {
-                    datos = "0"+datos;
-                }
+                Log.d(TAG, "P"+datos);
+                enviarMensaje("P" + datos); //
             }
-            Log.d(TAG, "P"+datos);
-            enviarMensaje("P" + datos); // CONTROL DE VELOCIDAD
+            else if(incremento.equals("0"))
+            {
+                Log.d(TAG, "p"+datos);
+                enviarMensaje("p" + datos); //
+            }
         }
 
-        if(v.getId() == R.id.b_enviar2) // abducir hombro
+        else if(v.getId() == R.id.b_enviar2) // abducir hombro
         {
-            animar(botonEnviar2);
-            // Rellenar con 0's
-            String datos = String.valueOf(valorBarra2);
-            for(conteo=0;conteo < 6; conteo++)
+            animar(botonEnviar2,0xe62b2a71, 0xe6000394);
+            datos = rellenar(valorBarra2);
+            if(incremento.equals("1"))  // incrementar frecuencia
             {
-                if (datos.length()<5)
-                {
-                    datos = "0"+datos;
-                }
+                Log.d(TAG, "M" + datos);
+                enviarMensaje("M" + datos); // CONTROL DE VELOCIDAD
             }
-            Log.d(TAG,"M" + datos);
-            enviarMensaje("M"+datos); // CONTROL DE VELOCIDAD
+            else if(incremento.equals("0"))
+            {
+                Log.d(TAG, "m" + datos);
+                enviarMensaje("m" + datos); // CONTROL DE VELOCIDAD
+            }
+        }
+
+        else if(v.getId() == R.id.b_paro)
+        {
+            // 0X8cff0000, 0xd2700000, 0X8cff0000
+            animar(botonParo,0X8cff0000, 0xd2700000);
+            Log.d(TAG,"S00000" );
+            enviarMensaje("S00000"); // PARO DE EMERGENCIA
         }
     }
     //************************************** SWITCH *********************************************//

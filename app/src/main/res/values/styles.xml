@@ -36,4 +36,9 @@
         <item name="android:background">@color/boton</item>
     </style>
 
+    <style name="boton_paro">
+        <item name="android:textColor">@color/letra</item>
+        <item name="android:background">@color/boton_paro</item>
+    </style>
+
 </resources>

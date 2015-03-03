@@ -35,6 +35,8 @@
     <string name="buscar2">Buscar nuevos dispositivos</string>
     <string name="b_scanning">  Cancelar busqueda  </string>
     <string name="b_accionar">  Enviar  </string>
+    <string name="b_parar">  Paro de emergencia  </string>
+
 
     <!-- textos DeviceList-->
     <string name="dialog_vinculados">Dispositivos Vinculados</string>

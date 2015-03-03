@@ -475,13 +475,14 @@ public class BluetoothManager {
                     bytes = mmInStream.read(buffer);        // Get number of bytes and message in "buffer"
                     String readed = new String(buffer, 0, bytes);
                     readMessage.append(readed);
-                    if(readed.contains("\n"))
+
+                    if(readed.contains("\r\n")||readed.contains("\n")||readed.contains("\r"))
                     {
                         mHandler.obtainMessage(Interfaz.MESSAGE_READ, bytes, -1, readMessage.toString()).sendToTarget();
-                        Log.i(TAG, "armado1: " + readMessage);
-                        readMessage.setLength(0);
+                        Log.i(TAG, "armado sin error: " + readMessage);
+                        //mHandler.obtainMessage(Interfaz.MESSAGE_READ, bytes, -1, readMessage.toString()).sendToTarget();
+                        readMessage.delete(0,readMessage.length());
                     }
-
 
                 } catch (IOException e) {
                     if (D) Log.e(TAG, "disconnected", e);
