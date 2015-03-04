@@ -71,7 +71,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:id="@+id/control"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_marginBottom="10dp"
         android:layout_weight="1.2">
         <LinearLayout
@@ -173,10 +173,22 @@
                 android:layout_width="199dp"
                 android:id="@+id/b_enviar2"
                 android:layout_height="0dp"
-                android:layout_weight="0.2"
+                android:layout_weight="1"
                 style="@style/boton"
                 android:text="@string/b_accionar"
                 android:layout_gravity="center_horizontal" />
+
+            <Switch
+                android:layout_gravity="center"
+                style="@style/btexto"
+                android:textOn="Sí"
+                android:textOff="No"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Incrementar frecuencia: "
+                android:id="@+id/switch2"
+                android:checked="false" />
         </LinearLayout>
     </LinearLayout>
 

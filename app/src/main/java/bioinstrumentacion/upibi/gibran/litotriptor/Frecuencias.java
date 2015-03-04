@@ -31,6 +31,7 @@ public class Frecuencias extends Activity {
     TextView frecuenciaModuladora1, frecuenciaModuladora2;
     TextView frecuenciaPaso;
     Switch incrementos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

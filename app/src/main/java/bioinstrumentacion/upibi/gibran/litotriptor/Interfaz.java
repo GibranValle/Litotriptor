@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
     Intent i;
     ObjectAnimator animador;
     String incremento;
+    Switch incrementar;
     // Debuggin
     String TAG = "Interfaz";
 
@@ -82,6 +84,8 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         barrita = (SeekBar) findViewById(R.id.velocidad);
         barrita2 = (SeekBar) findViewById(R.id.velocidad2);
 
+        incrementar = (Switch) findViewById(R.id.switch2);
+
         // asignar event listener
         botonEnviar1.setOnClickListener(this);
         botonEnviar2.setOnClickListener(this);
@@ -89,9 +93,9 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
 
         barrita.setOnSeekBarChangeListener(this);
         barrita2.setOnSeekBarChangeListener(this);
+        incrementar.setOnCheckedChangeListener(this);
 
-        //cargar la clave en cada push, abrir el archivo en modo privado
-        final SharedPreferences respaldo = getSharedPreferences("MisDatos", Context.MODE_PRIVATE);
+        SharedPreferences respaldo = getSharedPreferences("MisDatos", Context.MODE_PRIVATE);
         // cargar la clave en la variable clave, o 0000 por default (no encontrada, etc);
         pm = Integer.parseInt(respaldo.getString("fp1","10000"));
         pM = Integer.parseInt(respaldo.getString("fp2","20000"));
@@ -133,10 +137,8 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         // configurar el servicio de BT
         if (BTservice == null) configurar();
         //////////////////*BLUETOOH ////////////////*/////////////////*/////////////////*/////////////////*/
-
-        //cargar la clave en cada push, abrir el archivo en modo privado
-        final SharedPreferences respaldo = getSharedPreferences("MisDatos", Context.MODE_PRIVATE);
-        // cargar la clave en la variable clave, o 0000 por default (no encontrada, etc);
+        SharedPreferences respaldo = getSharedPreferences("MisDatos", Context.MODE_PRIVATE);
+       // cargar la clave en la variable clave, o 0000 por default (no encontrada, etc);
         pm = Integer.parseInt(respaldo.getString("fp1","10000"));
         pM = Integer.parseInt(respaldo.getString("fp2","20000"));
         mm = Integer.parseInt(respaldo.getString("fm1","0"));
@@ -145,7 +147,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         incremento = respaldo.getString("incremento","0");
 
         // ENVIAR LA CONFIGURACIÓN DE INCREMENTO
-        enviarMensaje("I" + incremento+"\n"); // INCREMENTO ?
+        enviarMensaje("I" + incremento + "\n"); // INCREMENTO ?
         enviarMensaje("F" + fss+"\n"); // PASO DE INCREMENTO
         enviarMensaje("A" + mM); // PASO DE INCREMENTO
     }
@@ -204,7 +206,11 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         {
             animar(botonEnviar2,0xe62b2a71, 0xe6000394);
             Log.d(TAG, "M"+valorBarra2);
-            enviarMensaje("M" + valorBarra2); // OPCION SIN RELLENAR
+            // ENVIAR LA CONFIGURACIÓN DE INCREMENTO
+            enviarMensaje("F" + fss+"\n"); // PASO DE INCREMENTO
+            enviarMensaje("A" + mM+"\n"); // PASO DE INCREMENTO
+            enviarMensaje("M" + valorBarra2+"\n"); // OPCION SIN RELLENAR
+            enviarMensaje("I" + incremento); // INCREMENTO ?
         }
 
         else if(v.getId() == R.id.b_paro)   // PARO DE EMERGENCIA
@@ -218,8 +224,28 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
     //************************************** SWITCH *********************************************//
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        SharedPreferences respaldo = getSharedPreferences("MisDatos", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = respaldo.edit();
         Vibrator vibrador = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);        // Vibrate for 500 milliseconds
-        vibrador.vibrate(50);
+        vibrador.vibrate(100);
+        if(isChecked) // incrementar frecuencia
+        {
+            editor.putString("incremento", "1");
+            if(editor.commit())
+            {
+                Toast.makeText(getBaseContext(),"Incremento activado", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else
+        {
+            editor.putString("incremento", "0");
+            if(editor.commit())
+            {
+                Toast.makeText(getBaseContext(),"Incremento desactivado", Toast.LENGTH_SHORT).show();
+            }
+        }
+        incremento = respaldo.getString("incremento","0");
+        enviarMensaje("I" + incremento); // INCREMENTO ?
     }
 
     //************************************** Seekbar *********************************************//

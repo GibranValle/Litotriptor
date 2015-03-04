@@ -16,7 +16,7 @@
     <string name="novinculados">No se encontraron dispositivos vinculados</string>
     <string name="noencontrados">No se encontraron dispositivos</string>
     <string name="frecuenciap">Frecuencia portadora:  </string>
-    <string name="frecuenciam">Frecuencia moduladora:  </string>
+    <string name="frecuenciam">Frecuencia:  </string>
     <string name="progreso">0Hz</string>
 
     <!-- textos BT -->
