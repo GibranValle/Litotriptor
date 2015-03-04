@@ -46,23 +46,19 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
     private BluetoothAdapter BTadaptador = null;
     // Member object for the chat services
     private BluetoothManager BTservice = null;
-
-    int pm, pM, mm, mM, fss;
-
-    // Debuggin
-    String TAG = "Interfaz";
     private static final boolean D = true;
     /*//////////////////////// CONSTANTES PARA BLUETOOTH//////////////////////////////////////////*/
-
+    int pm, pM, mm, mM, fss;
+    int valorBarra1, valorBarra2;
     TextView estado, consola;
     TextView frecuenciaPortadora, frecuenciaModuladora, texto1, texto2;
     Button botonEnviar1, botonEnviar2, botonParo;
     SeekBar barrita, barrita2;
     Intent i;
-    int valorBarra1, valorBarra2;
     ObjectAnimator animador;
-    String datos, incremento;
-
+    String incremento;
+    // Debuggin
+    String TAG = "Interfaz";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,10 +130,9 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
                 BTservice.start();
             }
         }
-
         // configurar el servicio de BT
         if (BTservice == null) configurar();
-
+        //////////////////*BLUETOOH ////////////////*/////////////////*/////////////////*/////////////////*/
 
         //cargar la clave en cada push, abrir el archivo en modo privado
         final SharedPreferences respaldo = getSharedPreferences("MisDatos", Context.MODE_PRIVATE);
@@ -148,7 +143,11 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         mM = Integer.parseInt(respaldo.getString("fm2","1000"));
         fss = Integer.parseInt(respaldo.getString("fss","1"));
         incremento = respaldo.getString("incremento","0");
-        //////////////////*BLUETOOH ////////////////*/////////////////*/////////////////*/////////////////*/
+
+        // ENVIAR LA CONFIGURACIÓN DE INCREMENTO
+        enviarMensaje("I" + incremento+"\n"); // INCREMENTO ?
+        enviarMensaje("F" + fss+"\n"); // PASO DE INCREMENTO
+        enviarMensaje("A" + mM); // PASO DE INCREMENTO
     }
 
     @Override
@@ -162,7 +161,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "Destruyendo");
-        enviarMensaje("F");
+        enviarMensaje("S0");
         if (BTadaptador.isEnabled())//habilitar si no lo esta
         {
             BTadaptador.disable();
@@ -190,63 +189,30 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         animador.start();
     }
 
-    public String rellenar(int ENTERO)
-    {
-        int conteo;
-        String string = String.valueOf(ENTERO);
-        for(conteo=0;conteo < 6; conteo++)
-        {
-            if (string.length()<5)
-            {
-                string = "0"+string;
-            }
-        }
-        return  string;
-    }
-
     @Override
     public void onClick(View v) {
         Vibrator vibrador = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);        // Vibrate for 500 milliseconds
         vibrador.vibrate(100);
-        int conteo = 0;
-        if(v.getId() == R.id.b_enviar1) // rotar hombro
+        if(v.getId() == R.id.b_enviar1) // FRECUENCIA PORTADORA
         {
             animar(botonEnviar1, 0xe62b2a71, 0xe6000394);
-            datos = rellenar(valorBarra1);
-            if(incremento.equals("1"))  // incrementar frecuencia
-            {
-                Log.d(TAG, "P"+datos);
-                enviarMensaje("P" + datos); //
-            }
-            else if(incremento.equals("0"))
-            {
-                Log.d(TAG, "p"+datos);
-                enviarMensaje("p" + datos); //
-            }
+            Log.d(TAG, "P"+valorBarra1);
+            enviarMensaje("P" + valorBarra1); // OPCION SIN RELLENAR
         }
 
-        else if(v.getId() == R.id.b_enviar2) // abducir hombro
+        else if(v.getId() == R.id.b_enviar2) // FRECUENCIA MODULADORA
         {
             animar(botonEnviar2,0xe62b2a71, 0xe6000394);
-            datos = rellenar(valorBarra2);
-            if(incremento.equals("1"))  // incrementar frecuencia
-            {
-                Log.d(TAG, "M" + datos);
-                enviarMensaje("M" + datos); // CONTROL DE VELOCIDAD
-            }
-            else if(incremento.equals("0"))
-            {
-                Log.d(TAG, "m" + datos);
-                enviarMensaje("m" + datos); // CONTROL DE VELOCIDAD
-            }
+            Log.d(TAG, "M"+valorBarra2);
+            enviarMensaje("M" + valorBarra2); // OPCION SIN RELLENAR
         }
 
-        else if(v.getId() == R.id.b_paro)
+        else if(v.getId() == R.id.b_paro)   // PARO DE EMERGENCIA
         {
             // 0X8cff0000, 0xd2700000, 0X8cff0000
             animar(botonParo,0X8cff0000, 0xd2700000);
-            Log.d(TAG,"S00000" );
-            enviarMensaje("S00000"); // PARO DE EMERGENCIA
+            Log.d(TAG,"S0" );
+            enviarMensaje("S0");
         }
     }
     //************************************** SWITCH *********************************************//
@@ -398,6 +364,7 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
+                // APLICAR LOS CAMBIOS DE COLOR EN LA INTERFAZ CUANDO DETECTA UN CAMBIO EN ESTADO
                 case MESSAGE_STATE_CHANGE:
                     if(D) Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
                     switch (msg.arg1) {
@@ -405,7 +372,11 @@ public class Interfaz extends Activity implements SeekBar.OnSeekBarChangeListene
                             estado.setText(R.string.bt_CT);
                             estado.setBackgroundColor(0x4300ff00);
                             Log.d(TAG, " BT CONECTADO");
-                            enviarMensaje("O");
+                            enviarMensaje("O"+"\n");
+                            // ENVIAR LA CONFIGURACIÓN DE INCREMENTO
+                            enviarMensaje("I" + incremento+"\n"); // INCREMENTO ?
+                            enviarMensaje("F" + fss+"\n"); // PASO DE INCREMENTO
+                            enviarMensaje("A" + mM); // PASO DE INCREMENTO
                             break;
                         case BluetoothManager.STATE_CONNECTING:
                             estado.setText(R.string.bt_CTING);
